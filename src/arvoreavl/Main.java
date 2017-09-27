@@ -9,7 +9,7 @@ package arvoreavl;
  *
  * @author Gabriel_Nascimento
  */
-public class ArvoreAVL {
+public class Main {
 
     /**
      * @param args the command line arguments
