@@ -49,8 +49,17 @@ public class RedBlackTree {
                     }else{
                         aux = aux.getVpFilho_esq();
                     }
+                }else if(k.getValor() >= aux.getValor()){
+                    if(aux.getVpFilho_dir() == null){
+                        aux.setVpFilho_dir(k);
+                        k.setPai(aux);
+                    }else{
+                        aux = aux.getVpFilho_esq();
+                    }
                 }
             }
+            reorganizaArvore(k);
+            //https://stackoverflow.com/questions/40603255/how-to-make-red-black-tree-generic-in-java
         }
     }
     
@@ -62,7 +71,7 @@ public class RedBlackTree {
         raiz.setVpFilho_dir(null);
     }
     
-    private void reorganizaArvore(int item){
+    private void reorganizaArvore(no item){
         
     }
     
