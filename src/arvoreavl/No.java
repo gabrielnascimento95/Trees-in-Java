@@ -16,9 +16,11 @@ public class No {
     private No dir;
     private No esq;
 
-    public No(No proximo, No anterior) {
+    public No(int val, No proximo, No anterior) {
+        this.valor = val;
         this.dir = proximo;
         this.esq = anterior;
+        this.altura = 0;
     }
 
     public int getAltura() {
