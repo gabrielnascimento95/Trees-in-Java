@@ -59,7 +59,7 @@ public class RedBlackTree {
                 }
             }
             reorganizaArvore(k);
-            //https://stackoverflow.com/questions/40603255/how-to-make-red-black-tree-generic-in-java
+            
         }
     }
     
@@ -72,7 +72,49 @@ public class RedBlackTree {
     }
     
     private void reorganizaArvore(no item){
-        
+        while (item.getPai().getCor() == 0) {
+            no tio = null;
+            if (item.getPai() == item.getPai().getPai().getVpFilho_esq()) {
+                tio = item.getPai().getPai().getVpFilho_dir();
+                if (tio != null && tio.getCor() == 0) {
+                    item.getPai().setCor(0);
+                    tio.setCor(0);
+                    item.getPai().getPai().setCor(1);
+                    item = item.getPai().getPai();
+                    continue;
+                } 
+                if (item == item.getPai().getVpFilho_dir()) {
+                    //Double rotation needed
+                    item = item.getPai();
+                    rotateLeft(item);
+                } 
+                item.getPai().setCor(1);
+                item.getPai().getPai().setCor(0);
+                rotateRight(item.getPai().getPai());
+            } else {
+                tio = item.getPai().getPai().getVpFilho_esq();
+                 if (tio != null && tio.getCor() == 0) {
+                    item.getPai().setCor(1);
+                    tio.setCor(1);
+                    item.getPai().getPai().setCor(0);
+                    item = item.getPai().getPai();
+                    continue;
+                }
+                if (item == item.getPai().getVpFilho_esq()) {
+                    //Double rotation needed
+                    item = item.getPai();
+                    rotateRight(item);
+                }
+                item.getPai().setCor(1);
+                item.getPai().getPai().setCor(0);
+
+                rotateLeft(item.getPai().getPai());
+            }
+        }
+        raiz.setCor(1);
     }
     
 }
+
+
+// https://stackoverflow.com/questions/40603255/how-to-make-red-black-tree-generic-in-java
