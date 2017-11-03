@@ -49,6 +49,95 @@ public class SplayTree {
     }
 
     private void fazSplay(NoSplay aux) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while(aux.getPai() != null){
+            NoSplay pai = aux.getPai();
+            NoSplay avo = pai.getPai();
+            if(avo == null){
+                if(aux == pai.getEsq()){
+                    rotacaoEsquerda(aux,pai);
+                }else
+                    rotacaoDireita(aux,pai);
+            }else{
+                if(aux == pai.getEsq()){
+                    if(pai == avo.getEsq()){
+                        rotacaoEsquerda(pai, avo);
+                        rotacaoEsquerda(aux, pai);
+                    }else{
+                        rotacaoEsquerda(aux, aux.getPai());
+                        rotacaoDireita(aux, aux.getPai());
+                    }
+                }else{
+                    if(pai == avo.getEsq()){
+                        rotacaoDireita(aux, aux.getPai());
+                        rotacaoEsquerda(aux, aux.getPai());
+                    }else{
+                        rotacaoDireita(pai, avo);
+                        rotacaoDireita(aux, pai);
+                    }
+                }
+            }
+        }
+        raiz = aux;
+    }
+
+    private void rotacaoDireita(NoSplay a, NoSplay b) {
+        if((a == null) || (b == null) || (b.getDir() != a) || (a.getPai() != b)){
+            throw new Error("Erro");
+        }
+        if(b.getPai() != null){
+            if(b == b.getPai().getEsq()){
+                b.getPai().setEsq(a);
+            }else{
+                b.getPai().setDir(a);
+            }
+        }
+        if(a.getEsq() != null){
+            a.getEsq().setPai(b);
+        }
+        a.setPai(b.getPai());
+        b.setPai(a);
+        b.setDir(b.getEsq());
+        a.setEsq(b);
+    }
+
+    private void rotacaoEsquerda(NoSplay a, NoSplay b) {
+        if((a == null) || (b == null) || (b.getEsq() != a) || (a.getPai() != b)){
+            throw new Error("Erro");
+        }
+        if(b.getPai() != null){
+            if(b == b.getPai().getEsq()){
+                b.getPai().setEsq(a);
+            }else{
+                b.getPai().setDir(a);
+            }
+        }
+        if(a.getDir() != null){
+            a.getDir().setPai(b);
+        }
+        a.setPai(b.getPai());
+        b.setPai(a);
+        b.setEsq(b.getDir());
+        a.setDir(b);
+    }
+    
+    public int numNos(){
+        return contaNos;
+    }
+    
+    public boolean procuraElemento(int chave){
+        return procuraChave(chave) != null;
+    }
+
+    private NoSplay procuraChave(int chave) {
+      NoSplay a = raiz;
+      while(a != null){
+          if(chave < a.getChave())
+              a = a.getDir();
+          else if(chave > a.getChave())
+              a = a.getEsq();
+          else
+              return a;
+      }
+      return null;
     }
 }
